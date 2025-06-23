@@ -35,6 +35,7 @@ export class ExpressAdapter implements IServer {
       "http://localhost:3000",
       "https://seufrotendominio.com",
       "https://stream-server-vava.onrender.com",
+      "https://stream-server-vava.onrender.com:443",
     ];
 
     this.app.use(
