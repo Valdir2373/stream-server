@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Não Encontrada - 404</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        text-align: center;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 8em;
+        color: #e74c3c; /* Vermelho vibrante */
+        margin-bottom: 10px;
+        animation: bounce 1s infinite alternate; /* Efeito de "quebrado" */
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
+      }
+
+      h2 {
+        font-size: 2em;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
+      .button-group a {
+        display: inline-block;
+        background-color: #3498db; /* Azul */
+        color: #fff;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 0 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      .button-group a:hover {
+        background-color: #2980b9;
+      }
+
+      .button-group a.secondary {
+        background-color: #7f8c8d; /* Cinza */
+      }
+
+      .button-group a.secondary:hover {
+        background-color: #6c7a7b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>404</h1>
+      <h2>Página Não Encontrada</h2>
+      <p>
+        Ops! Parece que a página que você está procurando não existe ou foi
+        movida. Não se preocupe, estamos aqui para ajudar!
+      </p>
+      <div class="button-group">
+        <a href="/">Ir para a Página Inicial</a>
+        <a href="mailto:suporte@seusite.com" class="secondary"
+          >Entrar em Contato com o Suporte</a
+        >
+      </div>
+      <p style="margin-top: 30px; font-size: 0.9em; color: #888">
+        Se você digitou o endereço manualmente, verifique se está correto.
+      </p>
+    </div>
+  </body>
+</html>

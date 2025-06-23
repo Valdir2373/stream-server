@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Moderna</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="fas fa-rocket me-2"></i>Plataforma
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"
+                ><i class="fas fa-home me-1"></i> Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-book me-1"></i> Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-info-circle me-1"></i> Sobre</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-envelope me-1"></i> Contato</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="container my-5">
+      <div class="auth-container animate__animated animate__fadeIn">
+        <div class="auth-header">
+          <h2>
+            <i class="fas fa-desktop text-primary me-2"></i>Criar Stream
+            Executável
+          </h2>
+          <p class="text-muted">
+            Configure os detalhes para o seu arquivo de stream.
+          </p>
+        </div>
+
+        <form>
+          <div class="mb-3">
+            <label for="streamName" class="form-label">Nome do Stream</label>
+            <input
+              type="text"
+              class="form-control"
+              id="streamName"
+              placeholder="Ex: Minha Live Incrível"
+              minlength="6"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="streamPassword" class="form-label"
+              >Senha do Stream</label
+            >
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="streamPassword"
+                placeholder="Mínimo 6 caracteres"
+                minlength="6"
+                required
+              />
+              <button
+                class="btn btn-outline-secondary toggleDisabler password"
+                type="button"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Desativar Senha"
+              >
+                <i class="fas fa-lock"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-magic me-2"></i>Gerar Stream.exe
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="bg-primary text-white py-4">
+      <div class="container text-center">
+        <p class="mb-0">
+          © 2023 Plataforma Moderna. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/createStream.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const listTogglePasswordBtn =
+          document.querySelectorAll(".toggleDisabler");
+        const streamPasswordInput = document.getElementById("streamPassword");
+        const fetchEmailBtn = document.getElementById("fetchEmail");
+        const connectEmailInput = document.getElementById("connectEmail");
+
+        function discoverElementDaddy(toggleDisabler) {
+          let AllClass = [];
+          const a = toggleDisabler.classList.forEach((el) => {
+            AllClass.push(el);
+          });
+          return AllClass.pop();
+        }
+
+        function getElementDaddy(toggleDisabler) {
+          const element = discoverElementDaddy(toggleDisabler);
+
+          if (element === "password") {
+            return [streamPasswordInput, element];
+          } else if (element === "email") {
+            return [connectEmailInput, element];
+          }
+        }
+
+        listTogglePasswordBtn.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const [streamInput, element] = getElementDaddy(btn);
+
+            if (streamInput.disabled) {
+              streamInput.disabled = false;
+              streamInput.placeholder = "Mínimo 6 caracteres";
+              streamInput.setAttribute("type", "password");
+              btn.innerHTML = '<i class="fas fa-lock"></i>';
+              btn.setAttribute("title", "Desativar " + element);
+              streamInput.focus();
+            } else {
+              streamInput.disabled = true;
+              streamInput.value = "";
+              streamInput.placeholder = "Não recomendado";
+              streamInput.setAttribute("type", "text");
+              btn.innerHTML = '<i class="fas fa-lock-open"></i>';
+              btn.setAttribute("title", "Ativar " + element);
+            }
+          });
+        });
+
+        // fetchEmailBtn.addEventListener("click", async function () {
+        //   try {
+        //     const response = await fetch("/getUserEmail");
+        //     if (response.ok) {
+        //       const data = await response.json();
+        //       connectEmailInput.value = data.email;
+        //       connectEmailInput.disabled = true;
+        //       connectEmailInput.placeholder = data.email; // Opcional: mantém o e-mail no placeholder também
+        //     } else {
+        //       // Lidar com erro ou não autenticado
+        //       connectEmailInput.value = "";
+        //       connectEmailInput.placeholder = "Falha ao carregar e-mail";
+        //       connectEmailInput.disabled = false;
+        //       console.error("Erro ao buscar e-mail:", response.statusText);
+        //     }
+        //   } catch (error) {
+        //     console.error("Erro de rede ou ao buscar e-mail:", error);
+        //     connectEmailInput.value = "";
+        //     connectEmailInput.placeholder = "Erro de conexão";
+        //     connectEmailInput.disabled = false;
+        //   }
+        // });
+
+        // Inicializa tooltips do Bootstrap
+        const tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      });
+    </script>
+    <script>
+      const buttonsLoginRegister = (logged) => {
+        const SignIn = `<li class="nav-item">
+            <a class="nav-link" href="login.html"
+            ><i class="fas fa-sign-in-alt me-1"></i> Login</a
+            >
+            </li>`;
+
+        const SignUp = `<li class="nav-item">
+              <a class="nav-link" href="register.html"
+              ><i class="fas fa-user-plus me-1"></i> Cadastro</a
+              >
+              </li>`;
+
+        const loginOn = `<li class="nav-item">
+                <a class="nav-link" href="myProfile.html"
+                ><i class="fas fa-user me-1"></i> Meu perfil</a
+                >
+                </li>`;
+        if (logged) {
+        }
+        const navItem = document.createElement("li");
+        const navBar = document.querySelector(".navbar-nav");
+        if (logged) {
+          navItem.innerHTML = loginOn;
+          navBar.appendChild(navItem);
+        } else {
+          navItem.innerHTML = SignIn;
+          const navItemSignUp = document.createElement("li");
+          navItemSignUp.innerHTML = SignUp;
+          navBar.appendChild(navItem);
+          navBar.appendChild(navItemSignUp);
+        }
+        navBar.appendChild(navItem);
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let logged;
+        logged = await fetch("/verifyUser").then((r) => r.text());
+        logged = logged === "false" ? false : true;
+
+        if (!logged) {
+          logged = !(
+            (await fetch("/refreshToken").then((r) => r.json())).message ===
+            "unauthorized"
+          );
+        }
+
+        buttonsLoginRegister(logged);
+      });
+    </script>
+  </body>
+</html>
