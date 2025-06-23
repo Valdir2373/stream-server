@@ -130,7 +130,7 @@ export class NodemailerEmailService implements IEmailService {
     </div>
     <div class="footer">
       <p>Atenciosamente,<br>Vava dev</p>
-      <p><a href="mailto:valdirdesouzajunioradm@gmail.com">Contato</a> | <a href="http://stream-server-vava.onrender.com:1090:1090/index.html">Nosso Site</a></p>
+      <p><a href="mailto:valdirdesouzajunioradm@gmail.com">Contato</a> | <a href="https://stream-server-vava.onrender.com:1090:1090/index.html">Nosso Site</a></p>
     </div>
   </div>
 </body>
@@ -145,7 +145,7 @@ export class NodemailerEmailService implements IEmailService {
     return await this.sendLinkVerificationEmail(userOutputDTO.email, link, 5);
   }
   private genarateLink(userOutputDTO: UserOutputDTO) {
-    return `http://stream-server-vava.onrender.com:1090/verifyEmail/${this.token.generateTokenTimerSet(
+    return `https://stream-server-vava.onrender.com:1090/verifyEmail/${this.token.generateTokenTimerSet(
       {
         email: userOutputDTO.email,
       },

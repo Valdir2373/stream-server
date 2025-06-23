@@ -217,7 +217,7 @@
         let streamId;
         try {
           const streamResponse = await fetch(
-            `http://stream-server-vava.onrender.com:1090/getStreamIdByName/${nameStream}`,
+            `https://stream-server-vava.onrender.com:1090/getStreamIdByName/${nameStream}`,
             {
               method: "POST",
               body: JSON.stringify({ idUser: id }),
