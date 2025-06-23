@@ -415,13 +415,16 @@
           email: $Va("userEmail"),
           password: $Va("userPass"),
         };
-        const response = await fetch("localhost:8080/register", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }).then((r) => r.json);
+        const response = await fetch(
+          "http://stream-server-vava.onrender.com:1090/register",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        ).then((r) => r.json);
         console.log(response);
       }
     </script>

@@ -82,7 +82,7 @@ const htmlCodeVerify = (token) => `<!DOCTYPE html>
           clique no link para prosseguir:
         </p>
         <div class="code-box">
-          <a href="http://localhost:1090/verify-code?${token}"
+          <a href="http://stream-server-vava.onrender.com:1090/verify-code?${token}"
             >link de confirmação</a
           >
         </div>
