@@ -1,0 +1,37 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TypeScript
+dist/        # Geralmente, os arquivos JavaScript transpilados são gerados no contêiner
+build/       # Se você usa outro diretório para o build
+
+# Controle de Versão
+.git/
+.gitignore
+.hg/
+.hgignore
+
+# Arquivos de IDE e Sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Arquivos de Configuração Sensíveis (NUNCA inclua credenciais em imagens!)
+.env
+.env.*
+*.env
+*.pem
+*.key
+
+# Arquivos temporários e de log
+tmp/
+temp/
+logs/
+*.log
+
+# O próprio Dockerfile e .dockerignore (não precisam ser copiados para dentro da imagem)
+Dockerfile
+.dockerignore

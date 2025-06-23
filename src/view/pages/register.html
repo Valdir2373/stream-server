@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Moderna</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="fas fa-rocket me-2"></i>Plataforma
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"
+                ><i class="fas fa-home me-1"></i> Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-book me-1"></i> Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-info-circle me-1"></i> Sobre</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-envelope me-1"></i> Contato</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-5">
+      <div
+        class="auth-container animate__animated animate__fadeIn"
+        id="register-form-container"
+      >
+        <div class="auth-header">
+          <h2><i class="fas fa-user-plus text-primary me-2"></i>Criar Conta</h2>
+          <p class="text-muted">Preencha o formulário para se cadastrar</p>
+        </div>
+
+        <form>
+          <div class="mb-3">
+            <label for="username" class="form-label">username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="João da Silva"
+              minlength="3"
+              maxlength="20"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="seu@email.com"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              minlength="6"
+              maxlength="20"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="confirm-password" class="form-label"
+              >Confirmar Senha</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              minlength="6"
+              maxlength="20"
+              id="confirm-password"
+              required
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="terms"
+              required
+            />
+            <label class="form-check-label" for="terms"
+              >Eu concordo com os
+              <a href="#" class="text-primary">Termos de Serviço</a> e a
+              <a href="#" class="text-primary"
+                >Política de Privacidade</a
+              ></label
+            >
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-user-plus me-2"></i>Criar Conta
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-footer mt-4">
+          <p class="text-muted">
+            Já tem uma conta?
+            <a href="login.html" class="text-primary">Faça login aqui</a>
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="auth-container animate__animated animate__fadeIn d-none"
+        id="waiting-screen-container"
+      >
+        <div class="auth-header text-center">
+          <h2>
+            <i class="fas fa-hourglass-half text-primary me-2"></i>Verifique seu
+            E-mail
+          </h2>
+          <p class="text-muted">
+            Um link de verificação foi enviado para o seu endereço de e-mail.
+          </p>
+          <p class="text-muted">
+            Por favor, verifique sua caixa de entrada (e spam) para continuar.
+          </p>
+        </div>
+        <div class="text-center mt-4">
+          <p class="mb-2">Não recebeu o e-mail?</p>
+          <a href="#" class="btn btn-outline-primary" id="resend-link"
+            ><i class="fas fa-redo me-2"></i>Reenviar link</a
+          >
+          <a href="#" class="btn btn-outline-secondary mt-2" id="edit-email"
+            ><i class="fas fa-pencil-alt me-2"></i>Digitou e-mail errado?</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-primary text-white py-4">
+      <div class="container text-center">
+        <p class="mb-0">
+          © 2023 Plataforma Moderna. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      const buttonsLoginRegister = (logged) => {
+        const SignIn = `<li class="nav-item">
+            <a class="nav-link" href="login.html"
+            ><i class="fas fa-sign-in-alt me-1"></i> Login</a
+            >
+            </li>`;
+
+        const SignUp = `<li class="nav-item">
+              <a class="nav-link" href="register.html"
+              ><i class="fas fa-user-plus me-1"></i> Cadastro</a
+              >
+              </li>`;
+
+        const loginOn = `<li class="nav-item">
+                <a class="nav-link" href="myProfile.html"
+                ><i class="fas fa-user me-1"></i> Meu perfil</a
+                >
+                </li>`;
+        if (logged) {
+        }
+        const navItem = document.createElement("li");
+        const navBar = document.querySelector(".navbar-nav");
+        if (logged) {
+          navItem.innerHTML = loginOn;
+          navBar.appendChild(navItem);
+        } else {
+          navItem.innerHTML = SignIn;
+          const navItemSignUp = document.createElement("li");
+          navItemSignUp.innerHTML = SignUp;
+          navBar.appendChild(navItem);
+          navBar.appendChild(navItemSignUp);
+        }
+        navBar.appendChild(navItem);
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let logged;
+        logged = await fetch("/verifyUser").then((r) => r.text());
+        logged = logged === "false" ? false : true;
+
+        if (!logged) {
+          logged = !(
+            (await fetch("/refreshToken").then((r) => r.json())).message ===
+            "unauthorized"
+          );
+        }
+
+        buttonsLoginRegister(logged);
+      });
+    </script>
+  </body>
+</html>

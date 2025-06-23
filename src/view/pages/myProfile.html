@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Perfil - Plataforma Moderna</title>
+    <!-- Inclui o CSS do Bootstrap para estilização -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Inclui o Font Awesome para ícones -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Inclui a fonte Poppins do Google Fonts para tipografia consistente -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Inclui o Animate.css para animações de entrada -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <!-- Link para o arquivo de estilo customizado (se houver, para manter consistência) -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Barra de Navegação (Navbar) - Replicada do index.html para manter o estilo -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="fas fa-rocket me-2"></i>Plataforma
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"
+                ><i class="fas fa-home me-1"></i> Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-book me-1"></i> Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-info-circle me-1"></i> Sobre</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="fas fa-envelope me-1"></i> Contato</a
+              >
+            </li>
+            <!-- O item "Meu Perfil" será adicionado dinamicamente ou ativado pelo JS -->
+            <!-- Adicionado um item placeholder para garantir que o JS possa manipulá-lo se necessário,
+                 mas o JS existente parece adicionar novos LIs. Manteremos a estrutura base e deixaremos
+                 o JS lidar com a adição de 'Meu Perfil', 'Login' ou 'Cadastro'.
+                 Para esta página, esperamos que o usuário esteja logado. -->
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="myProfile.html"
+                ><i class="fas fa-user me-1"></i> Meu Perfil</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Conteúdo Principal da Página de Perfil -->
+    <main class="container my-5">
+      <div class="row">
+        <div class="col-12 text-center animate__animated animate__fadeIn">
+          <h1 class="display-4 text-primary mb-4">
+            Bem-vindo(a) ao seu Perfil
+          </h1>
+          <p class="lead text-muted">
+            Gerencie suas informações e acessos aqui.
+          </p>
+          <div
+            class="card p-4 shadow-sm mt-4 animate__animated animate__zoomIn"
+          >
+            <h2 class="h4 text-primary mb-3">Detalhes do Usuário</h2>
+            <div class="text-start">
+              <p>
+                <strong>Nome:</strong>
+                <span id="userName">Nome do Usuário</span>
+              </p>
+              <p>
+                <strong>Email:</strong>
+                <span id="userEmail">email@example.com</span>
+              </p>
+              <p><strong>Status:</strong> <span id="userStatus">Ativo</span></p>
+              <!-- Adicione mais campos de perfil conforme necessário -->
+            </div>
+            <hr class="my-4" />
+            <!-- Botão "Meus Streams" -->
+            <a
+              href="myStreams.html"
+              class="btn btn-outline-primary btn-lg px-4 mt-3"
+            >
+              <i class="fas fa-stream me-2"></i>Meus Streams
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Rodapé (Footer) - Replicado do index.html -->
+    <footer class="bg-primary text-white py-4">
+      <div class="container text-center">
+        <p class="mb-0">
+          © 2023 Plataforma Moderna. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Scripts do Bootstrap e outros JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link para o arquivo de script customizado (se houver) -->
+    <script src="js/script.js"></script>
+    <script>
+      const buttonsLoginRegister = (logged) => {
+        const navBar = document.querySelector(".navbar-nav");
+
+        const dynamicItems = navBar.querySelectorAll(".nav-item.dynamic-auth");
+        dynamicItems.forEach((item) => item.remove());
+
+        const SignIn = `<li class="nav-item dynamic-auth">
+            <a class="nav-link" href="login.html"
+            ><i class="fas fa-sign-in-alt me-1"></i> Login</a
+            >
+            </li>`;
+
+        const SignUp = `<li class="nav-item dynamic-auth">
+            <a class="nav-link" href="register.html"
+            ><i class="fas fa-user-plus me-1"></i> Cadastro</a
+            >
+            </li>`;
+
+        const loginOn = `<li class="nav-item dynamic-auth">
+              <a class="nav-link" href="myProfile.html"
+              ><i class="fas fa-user me-1"></i> Meu perfil</a
+              >
+              </li>`;
+
+        const isMyProfilePage =
+          window.location.pathname.includes("myProfile.html");
+
+        if (logged) {
+          let profileLink = navBar.querySelector(
+            '.nav-item a[href="myProfile.html"]'
+          );
+          if (!profileLink) {
+            const navItem = document.createElement("li");
+            navItem.classList.add("nav-item", "dynamic-auth");
+            navItem.innerHTML = loginOn;
+            navBar.appendChild(navItem);
+            profileLink = navItem.querySelector("a");
+          }
+
+          if (isMyProfilePage) {
+            profileLink.classList.add("active");
+            profileLink.setAttribute("aria-current", "page");
+          } else {
+            profileLink.classList.remove("active");
+            profileLink.removeAttribute("aria-current");
+          }
+        } else {
+          const navItemSignIn = document.createElement("li");
+          navItemSignIn.classList.add("nav-item", "dynamic-auth");
+          navItemSignIn.innerHTML = SignIn;
+          navBar.appendChild(navItemSignIn);
+
+          const navItemSignUp = document.createElement("li");
+          navItemSignUp.classList.add("nav-item", "dynamic-auth");
+          navItemSignUp.innerHTML = SignUp;
+          navBar.appendChild(navItemSignUp);
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let logged = false;
+
+        try {
+          const verifyResponse = await fetch("/verifyUser");
+          try {
+            const verifyText = await verifyResponse.json();
+            logged = verifyText;
+          } catch (e) {
+            if (e instanceof SyntaxError) {
+              logged = false;
+            }
+          }
+          if (!logged) {
+            console.log("Usuário não logado, tentando refresh do token...");
+            const refreshResponse = await fetch("/refreshToken");
+            const refreshJson = await refreshResponse.json();
+            logged = !(refreshJson.message === "unauthorized");
+            if (logged) {
+              console.log(
+                "Token refrescado com sucesso. Usuário agora logado."
+              );
+            } else {
+              console.log(
+                "Falha ao refrescar token. Usuário permanece não logado."
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Erro ao verificar status de login:", error);
+          logged = false;
+        }
+
+        buttonsLoginRegister(logged);
+
+        if (logged) {
+          console.log(logged);
+
+          document.getElementById("userName").textContent = logged.username;
+          document.getElementById("userEmail").textContent = logged.email;
+        } else {
+          document.getElementById("userName").textContent = "Não disponível";
+          document.getElementById("userEmail").textContent = "Não disponível";
+          document.getElementById("userStatus").textContent = "Não logado";
+        }
+      });
+    </script>
+  </body>
+</html>
