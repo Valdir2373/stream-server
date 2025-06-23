@@ -246,7 +246,9 @@
           "Status: Conectando ao servidor de streaming...";
         statusElement.className = "loading";
 
-        const ws = new WebSocket("ws://stream-server-vava.onrender.com:443/ws");
+        const ws = new WebSocket(
+          "wss://stream-server-vava.onrender.com:443/ws"
+        );
 
         ws.onopen = () => {
           console.log("Conectado ao servidor WebSocket para live streaming.");

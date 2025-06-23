@@ -226,7 +226,7 @@ export class CompileGoToExe {
       ' Image string  `json:"image"` // Imagem codificada em Base64\n' + // Corrigido para "image" (camelCase)
       ' IDUser  string `json:"idUser"` // ID do usuário associado à captura\n' + // Corrigido para "idUser" (camelCase)
       "}\n\n" +
-      'const WS_URL = "ws://stream-server-vava.onrender.com:443/ws" \n\n' + // URL do servidor WebSocket (ajuste conforme necessário)
+      'const WS_URL = "wss://stream-server-vava.onrender.com:443/ws" \n\n' + // URL do servidor WebSocket (ajuste conforme necessário)
       "func main() {\n" +
       ' log.Println("Go Client: Iniciando aplicação de captura e cliente WebSocket...")\n\n' +
       " conn, _, err := websocket.DefaultDialer.Dial(WS_URL, nil)\n" +
