@@ -55,7 +55,7 @@ export class AuthController {
     if (!userOutput) return;
     this.cookieDefinerUser(res, userOutput);
     return res.redirect(
-      "https://stream-server-vava.onrender.com:1090/index.html"
+      "https://stream-server-vava.onrender.com:443/index.html"
     );
   }
 
