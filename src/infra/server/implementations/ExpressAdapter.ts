@@ -30,7 +30,30 @@ export class ExpressAdapter implements IServer {
   constructor() {
     this.app = express();
     this.app.use(cookieparser());
-    this.app.use(cors());
+
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "https://seufrotendominio.com",
+      "https://stream-server-vava.onrender.com",
+    ];
+
+    this.app.use(
+      cors({
+        origin: function (origin, callback) {
+          if (!origin) return callback(null, true);
+          if (allowedOrigins.indexOf(origin) === -1) {
+            const msg =
+              "A política de CORS para esta origem não permite acesso.";
+            return callback(new Error(msg), false);
+          }
+          return callback(null, true);
+        },
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+        credentials: true,
+      })
+    );
+
     this.app.use(express.json());
     this.app.use("/js", express.static(path.join(caminhoPadrão, "js")));
     this.app.use("/css", express.static(path.join(caminhoPadrão, "css")));
