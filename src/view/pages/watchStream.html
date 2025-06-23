@@ -217,7 +217,7 @@
         let streamId;
         try {
           const streamResponse = await fetch(
-            `http://localhost:1090/getStreamIdByName/${nameStream}`,
+            `http://stream-server-vava.onrender.com:1090/getStreamIdByName/${nameStream}`,
             {
               method: "POST",
               body: JSON.stringify({ idUser: id }),
@@ -246,7 +246,9 @@
           "Status: Conectando ao servidor de streaming...";
         statusElement.className = "loading";
 
-        const ws = new WebSocket("ws://localhost:1090/ws");
+        const ws = new WebSocket(
+          "ws://stream-server-vava.onrender.com:1090/ws"
+        );
 
         ws.onopen = () => {
           console.log("Conectado ao servidor WebSocket para live streaming.");

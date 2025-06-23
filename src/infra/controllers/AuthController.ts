@@ -54,7 +54,9 @@ export class AuthController {
     const userOutput = await this.usersService.getByEmailUser(email);
     if (!userOutput) return;
     this.cookieDefinerUser(res, userOutput);
-    return res.redirect("http://localhost:1090/index.html");
+    return res.redirect(
+      "http://stream-server-vava.onrender.com:1090/index.html"
+    );
   }
 
   private async resendVerification(
