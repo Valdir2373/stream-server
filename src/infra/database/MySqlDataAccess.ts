@@ -12,34 +12,6 @@ export class MySqlDataAccess implements IDataAccess {
   constructor(
     private readonly databaseHandler: IDatabaseHandler<PoolConnection>
   ) {}
-
-  private mapRowToEntity<T>(row: RowDataPacket): T {
-    const entity: any = {};
-    for (const key in row) {
-      if (Object.prototype.hasOwnProperty.call(row, key)) {
-        const camelCaseKey = key.replace(/_([a-z])/g, (g) =>
-          g[1].toUpperCase()
-        );
-        entity[camelCaseKey] = row[key];
-      }
-    }
-    return entity as T;
-  }
-
-  private mapEntityToRowData<T>(data: Partial<T>): Record<string, any> {
-    const rowData: Record<string, any> = {};
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const snakeCaseKey = key.replace(
-          /[A-Z]/g,
-          (match) => `_${match.toLowerCase()}`
-        );
-        rowData[snakeCaseKey] = (data as any)[key];
-      }
-    }
-    return rowData;
-  }
-
   async findMany<T>(
     collectionName: string,
     query?: Partial<T>,
@@ -86,6 +58,32 @@ export class MySqlDataAccess implements IDataAccess {
         connection.release();
       }
     }
+  }
+  private mapRowToEntity<T>(row: RowDataPacket): T {
+    const entity: any = {};
+    for (const key in row) {
+      if (Object.prototype.hasOwnProperty.call(row, key)) {
+        const camelCaseKey = key.replace(/_([a-z])/g, (g) =>
+          g[1].toUpperCase()
+        );
+        entity[camelCaseKey] = row[key];
+      }
+    }
+    return entity as T;
+  }
+
+  private mapEntityToRowData<T>(data: Partial<T>): Record<string, any> {
+    const rowData: Record<string, any> = {};
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const snakeCaseKey = key.replace(
+          /[A-Z]/g,
+          (match) => `_${match.toLowerCase()}`
+        );
+        rowData[snakeCaseKey] = (data as any)[key];
+      }
+    }
+    return rowData;
   }
 
   async findOne<T>(

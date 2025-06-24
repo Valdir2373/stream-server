@@ -165,7 +165,7 @@ export class StreamController {
     );
     server.registerRouter(
       "delete",
-      "/deleteStream",
+      "/deleteStream/:idStream",
       this.deleteStreamById.bind(this)
     );
   }
