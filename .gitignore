@@ -1,3 +1,5 @@
 node_modules/
 dist/
 src/client/
+.vscode/
+docker-compose.yml
