@@ -110,10 +110,11 @@ export class StreamController {
     req: IRequest,
     res: IResponse
   ): Promise<any> {
-    const token = this.authController.verifyCookieToAcess(req);
-    if (!token)
-      return res.status(401).json({ message: "error cookie invalid" });
+    // const token = this.authController.verifyCookieToAcess(req);
+    // if (!token)
+    //   return res.status(401).json({ message: "error cookie invalid" });
 
+    const token = { id: req.params.id };
     const allStreams: StreamOutputDTO[] =
       await this.streamService.getAllStreams(token.id);
     return res.json(allStreams);
@@ -160,7 +161,7 @@ export class StreamController {
     );
     server.registerRouter(
       "get",
-      "/getAllStreams",
+      "/getAllStreams/:id",
       this.getAllStreamByIdUser.bind(this)
     );
     server.registerRouter(
