@@ -46,7 +46,7 @@ const login = async () => {
     $("#email").value = "";
     $("#password").value = "";
 
-    window.location.href = "/index.html";
+    window.location.href = "/";
   } else {
     alert("Erro ao cadastrar. Tente novamente.");
   }

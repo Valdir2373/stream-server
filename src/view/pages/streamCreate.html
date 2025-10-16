@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+   
   <head>
+       
     <meta charset="UTF-8" />
+       
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plataforma Moderna</title>
+       
+    <title>Live Stream</title>
+       
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+       
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+       
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+       
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+       
     <link rel="stylesheet" href="css/style.css" />
+     
   </head>
+   
   <body>
+       
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
+        <a class="navbar-brand fw-bold" href="/">
           <i class="fas fa-rocket me-2"></i>Plataforma
         </a>
         <button
@@ -37,46 +49,36 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html"
-                ><i class="fas fa-home me-1"></i> Início</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"
-                ><i class="fas fa-book me-1"></i> Recursos</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"
-                ><i class="fas fa-info-circle me-1"></i> Sobre</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"
-                ><i class="fas fa-envelope me-1"></i> Contato</a
-              >
-            </li>
-          </ul>
+          <ul class="navbar-nav ms-auto"></ul>
         </div>
       </div>
     </nav>
+       
     <main class="container my-5">
+           
       <div class="auth-container animate__animated animate__fadeIn">
+               
         <div class="auth-header">
+                   
           <h2>
-            <i class="fas fa-desktop text-primary me-2"></i>Criar Stream
-            Executável
+                        <i class="fas fa-desktop text-primary me-2"></i>Criar
+            Stream             Executável          
           </h2>
+                   
           <p class="text-muted">
-            Configure os detalhes para o seu arquivo de stream.
+                        Configure os detalhes para o seu arquivo de stream.    
+                 
           </p>
+                 
         </div>
 
-        <form>
+               
+        <form id="streamForm">
+                   
           <div class="mb-3">
-            <label for="streamName" class="form-label">Nome do Stream</label>
+                       
+            <label for="streamName" class="form-label">Nome do Stream</label>  
+                     
             <input
               type="text"
               class="form-control"
@@ -85,13 +87,18 @@
               minlength="6"
               required
             />
+                     
           </div>
 
+                   
           <div class="mb-3">
+                       
             <label for="streamPassword" class="form-label"
               >Senha do Stream</label
             >
+                       
             <div class="input-group">
+                           
               <input
                 type="password"
                 class="form-control"
@@ -100,6 +107,7 @@
                 minlength="6"
                 required
               />
+                           
               <button
                 class="btn btn-outline-secondary toggleDisabler password"
                 type="button"
@@ -107,30 +115,52 @@
                 data-bs-placement="top"
                 title="Desativar Senha"
               >
-                <i class="fas fa-lock"></i>
+                                <i class="fas fa-lock"></i>              
               </button>
+                         
             </div>
+                     
           </div>
 
+                   
           <div class="d-grid gap-2 mt-4">
-            <button type="submit" class="btn btn-primary btn-lg">
-              <i class="fas fa-magic me-2"></i>Gerar Stream.exe
+                       
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              id="generateExeButton"
+            >
+                            <i class="fas fa-magic me-2"></i>Gerar Stream.exe  
+                       
             </button>
+                     
           </div>
+                 
         </form>
+             
       </div>
+         
     </main>
 
+       
     <footer class="bg-primary text-white py-4">
+           
       <div class="container text-center">
+               
         <p class="mb-0">
-          © 2023 Plataforma Moderna. Todos os direitos reservados.
+                    © 2025 Valdir de Souza. Todos os direitos reservados.      
+           
         </p>
+             
       </div>
+         
     </footer>
 
+       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+       
     <script src="../js/createStream.js"></script>
+           
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const listTogglePasswordBtn =
@@ -177,32 +207,8 @@
               btn.setAttribute("title", "Ativar " + element);
             }
           });
-        });
+        }); // Inicializa tooltips do Bootstrap
 
-        // fetchEmailBtn.addEventListener("click", async function () {
-        //   try {
-        //     const response = await fetch("/getUserEmail");
-        //     if (response.ok) {
-        //       const data = await response.json();
-        //       connectEmailInput.value = data.email;
-        //       connectEmailInput.disabled = true;
-        //       connectEmailInput.placeholder = data.email; // Opcional: mantém o e-mail no placeholder também
-        //     } else {
-        //       // Lidar com erro ou não autenticado
-        //       connectEmailInput.value = "";
-        //       connectEmailInput.placeholder = "Falha ao carregar e-mail";
-        //       connectEmailInput.disabled = false;
-        //       console.error("Erro ao buscar e-mail:", response.statusText);
-        //     }
-        //   } catch (error) {
-        //     console.error("Erro de rede ou ao buscar e-mail:", error);
-        //     connectEmailInput.value = "";
-        //     connectEmailInput.placeholder = "Erro de conexão";
-        //     connectEmailInput.disabled = false;
-        //   }
-        // });
-
-        // Inicializa tooltips do Bootstrap
         const tooltipTriggerList = [].slice.call(
           document.querySelectorAll('[data-bs-toggle="tooltip"]')
         );
@@ -211,6 +217,82 @@
         });
       });
     </script>
+
+           
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("streamForm");
+        const button = document.getElementById("generateExeButton");
+        const originalButtonText =
+          '<i class="fas fa-magic me-2"></i>Gerar Stream.exe';
+        let loadingInterval; // Defina as mensagens de loading e um índice para o controle
+
+        const loadingMessages = [
+          "Gerando .exe",
+          "Aguarde mais um pouco",
+          "Compilando .exe",
+        ];
+        let messageIndex = 0; // Componente Spinner do Bootstrap
+
+        const spinner = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>`; // Função para atualizar o texto do botão
+
+        function updateLoadingMessage() {
+          button.innerHTML = spinner + loadingMessages[messageIndex];
+          messageIndex = (messageIndex + 1) % loadingMessages.length;
+        } // Função para iniciar o estado de carregamento
+
+        function startLoading() {
+          button.disabled = true;
+          messageIndex = 0;
+          updateLoadingMessage(); // Exibe a primeira mensagem imediatamente // Alterna a mensagem a cada 5 segundos
+
+          loadingInterval = setInterval(updateLoadingMessage, 5000);
+        } // Função para parar o estado de carregamento e restaurar o botão
+
+        function stopLoading() {
+          clearInterval(loadingInterval);
+          button.disabled = false;
+          button.innerHTML = originalButtonText;
+        }
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Impede o envio padrão do formulário
+
+          if (form.checkValidity()) {
+            startLoading(); // Simulação de requisição assíncrona com espera MUITO LONGA (ex: 10 minutos * 60.000 ms/min)
+
+            const veryLongWaitTime = 600000; // 10 minutos
+
+            setTimeout(async () => {
+              try {
+                // Coletar dados do formulário
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries()); // Simular a chamada fetch (substitua '/seu-endpoint-de-stream' pelo real) // Ex: const response = await fetch('/seu-endpoint-de-stream', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } }); // SIMULAÇÃO DE SUCESSO APÓS A ESPERA
+
+                console.log(
+                  "Executável Gerado! (Simulação de 10 minutos concluída)"
+                ); // Adicionar lógica de sucesso aqui (ex: mensagem ou download)
+              } catch (error) {
+                console.error("Erro na geração do executável:", error); // Adicionar lógica de erro aqui
+              } finally {
+                stopLoading(); // Opcional: Mostra uma mensagem final no botão por um breve momento
+                button.innerHTML =
+                  '<i class="fas fa-check-circle me-2"></i>Concluído!';
+                setTimeout(() => {
+                  button.innerHTML = originalButtonText;
+                  button.disabled = false;
+                }, 3000);
+              }
+            }, veryLongWaitTime); // Tempo de espera para o "fetch"
+          } else {
+            // Se a validação do formulário HTML falhar, este bloco é executado
+            form.classList.add("was-validated"); // Força as mensagens de erro do Bootstrap
+          }
+        });
+      });
+    </script>
+
+           
     <script>
       const buttonsLoginRegister = (logged) => {
         const SignIn = `<li class="nav-item">
@@ -230,8 +312,6 @@
                 ><i class="fas fa-user me-1"></i> Meu perfil</a
                 >
                 </li>`;
-        if (logged) {
-        }
         const navItem = document.createElement("li");
         const navBar = document.querySelector(".navbar-nav");
         if (logged) {
@@ -250,17 +330,20 @@
       document.addEventListener("DOMContentLoaded", async () => {
         let logged;
         logged = await fetch("/verifyUser").then((r) => r.text());
+
+        console.log(logged);
         logged = logged === "false" ? false : true;
 
         if (!logged) {
-          logged = !(
-            (await fetch("/refreshToken").then((r) => r.json())).message ===
-            "unauthorized"
-          );
+          const response = await fetch("/refreshToken");
+          const responseJson = await response.json();
+
+          logged = !(responseJson.message === "unauthorized");
         }
 
         buttonsLoginRegister(logged);
       });
     </script>
+     
   </body>
 </html>
