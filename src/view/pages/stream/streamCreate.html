@@ -116,6 +116,23 @@
           document.querySelectorAll(".toggleDisabler");
         const streamPasswordInput = document.getElementById("streamPassword");
         const connectEmailInput = document.getElementById("connectEmail"); // Manter caso seja usado em outro lugar no HTML, mas parece não ser relevante para esta página.
+        const submitButton = document.querySelector(
+          "#streamForm button[type='submit']"
+        );
+
+        function showLoading() {
+          submitButton.setAttribute("disabled", "true");
+          submitButton.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>' +
+            "Gerando...";
+        }
+
+        function hideLoading(success = false) {
+          submitButton.removeAttribute("disabled");
+          submitButton.innerHTML =
+            '<i class="fas fa-magic me-2"></i>' +
+            (success ? "Gerar Stream.exe" : "Gerar Stream.exe");
+        }
 
         function discoverElementDaddy(toggleDisabler) {
           let AllClass = [];
@@ -183,6 +200,9 @@
           const streamPassword =
             document.getElementById("streamPassword").value;
 
+          // 1. Mostrar o carregamento e desabilitar o botão
+          showLoading();
+
           try {
             const response = await fetch("/createStream", {
               method: "POST",
@@ -210,14 +230,20 @@
               window.URL.revokeObjectURL(url);
               document.body.removeChild(a);
 
-              alert("Executável Go gerado e download iniciado!");
+              alert("Executável Go gerado e download iniciado! 🎉");
+              // 2. Esconder o carregamento com status de sucesso
+              hideLoading(true);
             } else {
               const errorData = await response.json();
               alert(`Erro ao criar stream: ${errorData.message}`);
+              // 3. Esconder o carregamento em caso de erro do servidor
+              hideLoading(false);
             }
           } catch (error) {
             console.error("Erro na requisição ou no download:", error);
             alert("Ocorreu um erro ao tentar gerar o executável.");
+            // 4. Esconder o carregamento em caso de erro de rede/JS
+            hideLoading(false);
           }
         });
 
@@ -242,16 +268,16 @@
             </li>`;
 
         const SignUp = `<li class="nav-item">
-              <a class="nav-link" href="register.html"
-              ><i class="fas fa-user-plus me-1"></i> Cadastro</a
-              >
-              </li>`;
-
-        const loginOn = `<li class="nav-item">
-                <a class="nav-link" href="myProfile.html"
-                ><i class="fas fa-user me-1"></i> Meu perfil</a
+                <a class="nav-link" href="register.html"
+                ><i class="fas fa-user-plus me-1"></i> Cadastro</a
                 >
                 </li>`;
+
+        const loginOn = `<li class="nav-item">
+                    <a class="nav-link" href="myProfile.html"
+                    ><i class="fas fa-user me-1"></i> Meu perfil</a
+                    >
+                    </li>`;
 
         if (logged) {
           navBar.insertAdjacentHTML("beforeend", loginOn);
