@@ -130,7 +130,7 @@ export class NodemailerEmailService implements IEmailService {
     </div>
     <div class="footer">
       <p>Atenciosamente,<br>Vava dev</p>
-      <p><a href="mailto:valdirdesouzajunioradm@gmail.com">Contato</a> | <a href="https://stream-server-vava.onrender.com:443/index.html">Nosso Site</a></p>
+      <p><a href="mailto:valdirdesouzajunioradm@gmail.com">Contato</a> | <a href="https://stream-server-vava.onrender.com:443/">Nosso Site</a></p>
     </div>
   </div>
 </body>

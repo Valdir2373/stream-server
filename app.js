@@ -95,7 +95,7 @@ const htmlCodeVerify = (token) => `<!DOCTYPE html>
         <p>Atenciosamente,<br />Vava dev</p>
         <p>
           <a href="mailto:gm2373cntofc@gmail.com">Contato</a> |
-          <a href="http://localhost:1090/index.html">Nosso Site</a>
+          <a href="http://localhost:1090/">Nosso Site</a>
         </p>
       </div>
     </div>

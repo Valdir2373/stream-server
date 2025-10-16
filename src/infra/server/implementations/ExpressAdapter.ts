@@ -32,11 +32,12 @@ export class ExpressAdapter implements IServer {
     this.app.use(cookieparser());
 
     const allowedOrigins = [
-      "http://localhost:3000",
-      "https://seufrotendominio.com",
       "https://stream-server-vava.onrender.com",
       "https://stream-server-vava.onrender.com:443",
     ];
+
+    if (process.env.NODE_ENV === "development")
+      allowedOrigins.push("http://localhost:1090");
 
     this.app.use(
       cors({

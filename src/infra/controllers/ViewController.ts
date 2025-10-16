@@ -58,7 +58,7 @@ export class ViewController {
   async mountRouters(server: IServer) {
     server.registerRouter("get", "/register.html", this.register.bind(this));
     server.registerRouter("get", "/login.html", this.login.bind(this));
-    server.registerRouter("get", "/index.html", this.home.bind(this));
+    server.registerRouter("get", "/", this.home.bind(this));
     server.registerRouter("get", "/myProfile.html", this.myProfile.bind(this));
     server.registerRouter("get", "/myStreams.html", this.myStreams.bind(this));
     server.registerRouter("get", "/watchStream", this.watchStream.bind(this));
