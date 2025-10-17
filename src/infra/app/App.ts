@@ -49,7 +49,7 @@ export class AppModule {
   private server: IServer;
   private webServer: IWebSocketServer;
 
-  private clientRegistry: IClientRegistry;
+  private clientRegistry: ClientRegistry;
   private webSocketRouter: WebSocketMessageRouter;
 
   constructor() {
@@ -68,7 +68,7 @@ export class AppModule {
 
     this.server = new ExpressAdapter();
 
-    this.clientRegistry = new ClientRegistry();
+    this.clientRegistry = new ClientRegistry(this.passwordHasher);
 
     const clientVisualizer = new ClientVisualizer(
       this.clientRegistry,

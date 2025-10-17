@@ -142,22 +142,22 @@
           console.log(logged);
 
           const SignIn = `<li class="nav-item">
-                    <a class="nav-link" href="login.html"
-                    ><i class="fas fa-sign-in-alt me-1"></i> Login</a
-                    >
-                    </li>`;
+					<a class="nav-link" href="login.html"
+					><i class="fas fa-sign-in-alt me-1"></i> Login</a
+					>
+					</li>`;
 
           const SignUp = `<li class="nav-item">
-                            <a class="nav-link" href="register.html"
-                            ><i class="fas fa-user-plus me-1"></i> Cadastro</a
-                            >
-                            </li>`;
+								<a class="nav-link" href="register.html"
+								><i class="fas fa-user-plus me-1"></i> Cadastro</a
+								>
+								</li>`;
 
           const loginOn = `<li class="nav-item">
-                                <a class="nav-link" href="myProfile.html"
-                                ><i class="fas fa-user me-1"></i> Meu perfil</a
-                                >
-                                </li>`;
+										<a class="nav-link" href="myProfile.html"
+										><i class="fas fa-user me-1"></i> Meu perfil</a
+										>
+										</li>`;
           const navBar = document.querySelector(".navbar-nav");
           if (logged) {
             const navItem = document.createElement("li");
@@ -175,8 +175,12 @@
         };
         buttonsLoginRegister(logged);
 
-        initializeWebSocket(logged.id);
+        // O 'logged' pode ser false ou o objeto do usuário logado.
+        // Se for false, passamos null ou um ID genérico (0) para evitar erro,
+        // mas a lógica de autenticação do fetch/ws já deve barrar quem não estiver logado.
+        initializeWebSocket(logged ? logged.id : null);
       });
+
       const screenStream = document.getElementById("screenStream");
       const statusElement = document.getElementById("status");
 
@@ -221,6 +225,19 @@
           return;
         }
 
+        // --- INCLUSÃO DA SOLICITAÇÃO DE SENHA ---
+        const streamPassword = prompt(
+          `O stream "${nameStream}" requer uma senha.\nPor favor, digite a senha de acesso:`
+        );
+
+        if (!streamPassword) {
+          statusElement.textContent =
+            "Status: Acesso negado. Senha não fornecida.";
+          statusElement.className = "disconnected";
+          return;
+        }
+        // ----------------------------------------
+
         statusElement.textContent =
           "Status: Conectando ao servidor de streaming...";
         statusElement.className = "loading";
@@ -237,6 +254,7 @@
               message: "CLIENT_CONNECT",
               id: id,
               idStream: streamId,
+              password: streamPassword, // Enviando a senha obtida
             })
           );
           statusElement.textContent = "Status: Conectado e Aguardando Stream";
@@ -267,7 +285,7 @@
                 statusElement.textContent = `Status: ${event.data.replace(
                   /_/g,
                   " "
-                )}. Verifique o ID do stream.`;
+                )}. Verifique o ID do stream ou a senha.`;
                 statusElement.className = "disconnected";
                 ws.close();
               }

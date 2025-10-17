@@ -5,6 +5,7 @@ import { IClientRegistry } from "../client/interfaces/IClientRegistry";
 export interface CaptureConnectMessageInputDto {
   id: string;
   message: string;
+  password: string;
 }
 
 export class CaptureClientConnectHandler implements IWebSocketMessageHandler {
@@ -41,7 +42,11 @@ export class CaptureClientConnectHandler implements IWebSocketMessageHandler {
       `[CaptureClientConnectHandler] Processando conexão de cliente de captura. Stream ID: ${message.id}`
     );
 
-    this.clientRegistry.registerCaptureClient(socket, message.id);
+    this.clientRegistry.registerCaptureClient(
+      socket,
+      message.id,
+      message.password
+    );
     socket.send(
       JSON.stringify({
         id: message.id,

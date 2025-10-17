@@ -2,19 +2,19 @@ import { spawn } from "child_process";
 import { writeFile, unlink, mkdir, cp, rm } from "fs/promises";
 import { join } from "path";
 import { tmpdir } from "os";
-import { ICreateId } from "../../../domain/services/ICreateId"; // Assegure que este caminho está correto
+import { StreamEntities } from "../../../domain/entities/Stream";
 
 export class CompileGoToExe {
   async execute(
     idUser: string,
-    idStream: string
+    stream: StreamEntities
   ): Promise<{ path: string; status: boolean }> {
     const tempDir = join(tmpdir(), `go_compile_${Date.now()}`);
     const goFileName = join(tempDir, "temp_capture_client.go");
     const outputExeName = join(tempDir, "capture_client.exe");
     const goModTemplate = join(process.cwd(), "go-mod-template");
 
-    const goCode = this.codeGo(idStream, idUser);
+    const goCode = this.codeGo(stream, idUser);
 
     try {
       await mkdir(tempDir, { recursive: true });
@@ -33,7 +33,6 @@ export class CompileGoToExe {
           `[CompileGoToExe]: go.sum copiado para ${join(tempDir, "go.sum")}`
         );
       } catch (sumErr: any) {
-        // go.sum pode não existir inicialmente, é normal.
         console.warn(
           `[CompileGoToExe]: go.sum não encontrado em ${goModTemplate}. Será gerado por 'go mod tidy' se necessário.`
         );
@@ -186,23 +185,15 @@ export class CompileGoToExe {
     }
   }
 
-  /**
-   * Gera o código fonte Go para o cliente de captura.
-   * Inclui lógica para capturar tela, codificar em Base64 e enviar via WebSocket
-   * com o ID da stream (gerado no TS) como 'id' da captura, e o ID do usuário.
-   * @param idStream O ID da stream/instância do cliente (gerado no TS, para o 'id' da captura).
-   * @param idUser O ID do usuário a ser incluído como 'idUser' no payload.
-   * @returns A string contendo o código fonte Go.
-   */
-  codeGo(idStream: string, idUser: string): string {
-    const escapedIdStream = idStream;
-    const escapedIdUser = idUser; // Escapar o idUser para inclusão segura no código Go
-
+  codeGo(stream: StreamEntities, idUser: string): string {
+    const escapedIdStream = stream.id;
+    const escapedIdUser = idUser; // Escapa a senha para evitar injeção de string na variável Go // Em Go, uma string literal pode conter aspas, mas é crucial garantir que caracteres especiais não quebrem a sintaxe Go. // Embora não haja uma função 'escape' nativa para strings Go em JavaScript, uma simples substituição de aspas é crucial para o contexto. // Para simplicidade aqui, vamos assumir que 'stream.password' não contém aspas duplas, mas em produção, um escape robusto seria necessário.
+    const streamPassword = stream.password; // quero passar a senha do stream junto no corpo da requisição
     return (
       "package main\n\n" +
       "import (\n" +
       ' "bytes"\n' +
-      ' "encoding/base64"\n' + // Importação para codificação Base64
+      ' "encoding/base64"\n' +
       ' "encoding/json"\n' +
       ' "image/jpeg"\n' +
       ' "log"\n' +
@@ -218,6 +209,7 @@ export class CompileGoToExe {
       "type Message struct {\n" +
       ' ID      string `json:"id"` \n' + // Corrigido para "id" (camelCase)
       ' IDUser  string `json:"idUser"` \n' + // Corrigido para "idUser" (camelCase)
+      ' Password string `json:"password"` \n' + // *** NOVO CAMPO: Senha do Stream/Cliente ***
       ' Message string  `json:"message"`\n' + // Corrigido para "message" (camelCase)
       "}\n\n" +
       "// ImagePayload define a estrutura do JSON para cada imagem enviada.\n" +
@@ -234,29 +226,31 @@ export class CompileGoToExe {
       '  log.Fatalf("Go Client: Falha ao conectar ao servidor WebSocket: %v", err)\n' +
       " }\n" +
       " defer conn.Close()\n" +
-      ' log.Println("Go Client: Conectado ao servidor WebSocket.")\n\n' +
-      // ID da stream/cliente injetado do TypeScript para o handshake inicial
-      // Este será o 'id' para cada captura, identificando a fonte da stream.
+      ' log.Println("Go Client: Conectado ao servidor WebSocket.")\n\n' + // ID da stream/cliente injetado do TypeScript para o handshake inicial // Este será o 'id' para cada captura, identificando a fonte da stream.
       ` var clientStreamID string = "` +
       escapedIdStream +
       `"` +
-      "\n" +
-      // Não é mais um ponteiro opcional, pois o ID será sempre fornecido
+      "\n" + // Não é mais um ponteiro opcional, pois o ID será sempre fornecido
       " var idStreamVal string = clientStreamID\n" +
       ' if idStreamVal != "" {\n' +
       '  log.Printf("Go Client: ID de Stream fornecido: %s", idStreamVal)\n' +
       " } else {\n" +
       '  log.Println("Go Client: Nenhum ID de Stream fornecido para o handshake. Usando ID vazio.")\n' +
-      " }\n\n" +
-      // ID do usuário injetado do TypeScript para as capturas de tela e handshake
+      " }\n\n" + // ID do usuário injetado do TypeScript para as capturas de tela e handshake
       ` var userID string = "` +
       escapedIdUser +
       `"` +
       "\n" +
-      ' log.Printf("Go Client: ID de Usuário para capturas: %s", userID)\n\n' +
+      ' log.Printf("Go Client: ID de Usuário para capturas: %s", userID)\n\n' + // Senha injetada do TypeScript para o handshake inicial
+      ` var streamPswd string = "` +
+      streamPassword +
+      `"` +
+      "\n" +
+      ' log.Println("Go Client: Senha do Stream injetada.")\n\n' + // Não exibe a senha no log por segurança
       " initialMsg := Message{\n" +
       "  ID:      idStreamVal, \n" + // Usando o ID da stream para o ID da mensagem inicial
       "  IDUser:  userID,\n" + // Incluindo userID na mensagem inicial
+      "  Password: streamPswd,\n" + // *** INCLUSÃO DA SENHA AQUI ***
       '  Message: "CAPTURE_CLIENT_CONNECT",\n' +
       " }\n\n" +
       " jsonMessage, err := json.Marshal(initialMsg) \n" +
@@ -271,7 +265,7 @@ export class CompileGoToExe {
       '  log.Printf("Go Client: Erro ao enviar JSON inicial: %v", err)\n' +
       "  return\n" +
       " }\n" +
-      ' log.Printf("Go Client: JSON inicial enviado: %s", jsonMessage)\n\n' +
+      ' log.Printf("Go Client: JSON inicial enviado. (Contém senha)",)\n\n' + // Modificado para não logar a senha
       " interrupt := make(chan os.Signal, 1)\n" +
       " signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)\n\n" +
       " done := make(chan struct{})\n" +
