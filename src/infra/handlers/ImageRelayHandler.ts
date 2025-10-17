@@ -84,7 +84,7 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
     }
 
     try {
-      console.log(parsedMessage);
+      // console.log(parsedMessage);
 
       const clientVisualizer = this.clientRegistry.getClientVisualizer(
         parsedMessage.idUser
@@ -102,7 +102,11 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
       console.log("idClient: " + idClient);
       console.log("clientVisualizer: " + clientVisualizer);
 
-      if (result) return adminSocket.send(parsedMessage.image);
+      if (result) {
+        console.log("imagem enviada com sucesso");
+        return adminSocket.send(parsedMessage.image);
+      }
+
       throw new Error("ERRO NA SENHA TALVEZ INCORRETA");
     } catch (error) {
       // console.error(
