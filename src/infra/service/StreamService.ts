@@ -8,6 +8,7 @@ import { StreamOutputDTO } from "../../application/stream/DTO/streamOutput";
 import { CompileGoToExe } from "../../application/stream/use-case/CompileGoToExe";
 import { GetStreamByName } from "../../application/stream/use-case/GetStreamByName";
 import { DeleteStreamById } from "../../application/stream/use-case/DeleteStreamById";
+import { StreamEntities } from "../../domain/entities/Stream";
 
 export class StreamService {
   private createStream: CreateStream;
@@ -35,15 +36,18 @@ export class StreamService {
       password: await this.passwordHash.hash(streamInput.password.trim()),
     };
 
-    const idStream: string = await this.createStream.execute(stream, idUser);
+    const streamEntitie: StreamEntities = await this.createStream.execute(
+      stream,
+      idUser
+    );
 
-    return await this.compileGoToExeWithId(idUser, idStream);
+    return await this.compileGoToExeWithStream(idUser, streamEntitie);
   }
   async getAllStreams(idUser: string): Promise<StreamOutputDTO[]> {
     return await this.getAllStreamsByIdUser.execute(idUser);
   }
-  async compileGoToExeWithId(idUser: string, idStream: string) {
-    return await this.compileGoToExe.execute(idUser, idStream);
+  async compileGoToExeWithStream(idUser: string, stream: StreamEntities) {
+    return await this.compileGoToExe.execute(idUser, stream);
   }
   async getStreamByNameRepository(name: string, idUser: string) {
     return await this.getStreamByName.execute(name, idUser);

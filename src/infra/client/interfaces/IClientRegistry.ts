@@ -1,5 +1,6 @@
 import { IWebSocket } from "../../../infra/server/interfaces/ws/IWebSocket";
 import { VisualizerConnectMessageInputDto } from "../../handlers/ClientVisualizer";
+import { IClientCapture } from "./ClientCapture";
 import { IClient } from "./IClients";
 
 export interface IClientRegistry {
@@ -9,7 +10,7 @@ export interface IClientRegistry {
   getClient(idStream: string): IWebSocket | undefined;
   unregisterClient(id: string): void;
 
-  registerCaptureClient(socket: IWebSocket, id: string): void;
+  registerCaptureClient(socket: IWebSocket, id: string, password: string): void;
   getCaptureClient(id: string): IWebSocket | undefined;
   unregisterCaptureClient(id: string): void;
 }

@@ -7,6 +7,7 @@ export interface VisualizerConnectMessageInputDto {
   id: string;
   idStream: string;
   message: "CLIENT_CONNECT";
+  password: string;
   socket: IWebSocket;
 }
 
@@ -49,6 +50,7 @@ export class ClientVisualizer implements IWebSocketMessageHandler {
       id: parsedMessage.id,
       idStream: parsedMessage.idStream,
       message: parsedMessage.message,
+      password: parsedMessage.password,
       socket: socket,
     };
 

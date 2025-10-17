@@ -1,18 +1,21 @@
 import { IWebSocket } from "../../infra/server/interfaces/ws/IWebSocket";
 import { IWebSocketMessageHandler } from "./interfaces/IWebSocketMessageHandler";
-import { IClientRegistry } from "../client/interfaces/IClientRegistry";
 import { WebSocket } from "ws";
+import { ClientRegistry } from "../client/ClientRegistry";
 
 interface ImagePayload {
   id: string;
   image: string;
   idUser: string;
+  password: string;
 }
 
-export class ImageRelayHandler implements IWebSocketMessageHandler {
-  private clientRegistry: IClientRegistry;
+let idClient = "";
 
-  constructor(clientRegistry: IClientRegistry) {
+export class ImageRelayHandler implements IWebSocketMessageHandler {
+  private clientRegistry: ClientRegistry;
+
+  constructor(clientRegistry: ClientRegistry) {
     this.clientRegistry = clientRegistry;
   }
 
@@ -33,6 +36,8 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
           parsedMessage.id
         );
 
+        idClient = parsedMessage.id;
+
         const isFromCaptureClient =
           captureClient && senderSocket === captureClient;
 
@@ -45,14 +50,19 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
 
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log("error em [ImageRelayHandler]:" + error.message);
       return false;
     }
 
     return false;
   }
 
-  handle(socket: IWebSocket, data: Buffer, isBinary: boolean): void {
+  async handle(
+    socket: IWebSocket,
+    data: Buffer,
+    isBinary: boolean
+  ): Promise<void> {
     let parsedMessage: ImagePayload | null = null;
     try {
       const jsonStringData = data.toString("utf8");
@@ -74,7 +84,20 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
     }
 
     try {
-      adminSocket.send(parsedMessage.image);
+      const clientVisualizer = this.clientRegistry.getClientVisualizer(
+        parsedMessage.id
+      );
+
+      let result: boolean = false;
+      if (idClient && clientVisualizer) {
+        result = await this.clientRegistry.verifyPasswordOfUserWithStream(
+          clientVisualizer.password,
+          idClient
+        );
+      }
+
+      if (result) return adminSocket.send(parsedMessage.image);
+      throw new Error("ERRO NA SENHA TALVEZ INCORRETA");
     } catch (error) {
       console.error(
         "[ImageRelayHandler] Erro ao retransmitir imagem para o Client:",

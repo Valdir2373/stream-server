@@ -1,14 +1,20 @@
 import { IClientRegistry } from "./interfaces/IClientRegistry";
 import { IWebSocket } from "../../infra/server/interfaces/ws/IWebSocket";
 import { VisualizerConnectMessageInputDto } from "../handlers/ClientVisualizer";
+import { IClientCapture } from "./interfaces/ClientCapture";
+import { IPasswordHasher } from "../../domain/services/IPasswordHasher";
+
+export interface VisualizerClient {
+  socket: IWebSocket;
+  stream: string;
+  password: string;
+}
 
 export class ClientRegistry implements IClientRegistry {
-  private streamsClients: Map<string, IWebSocket> = new Map();
+  constructor(private passHash: IPasswordHasher) {}
+  private streamsClients: Map<string, IClientCapture> = new Map();
 
-  private visualizerClients: Map<
-    string,
-    { socket: IWebSocket; stream: string }
-  > = new Map();
+  private visualizerClients: Map<string, VisualizerClient> = new Map();
 
   registerClient(
     visualizerConnectMessageInputDto: VisualizerConnectMessageInputDto
@@ -16,6 +22,7 @@ export class ClientRegistry implements IClientRegistry {
     this.visualizerClients.set(visualizerConnectMessageInputDto.id, {
       socket: visualizerConnectMessageInputDto.socket,
       stream: visualizerConnectMessageInputDto.idStream,
+      password: visualizerConnectMessageInputDto.password,
     });
     const socket = visualizerConnectMessageInputDto.socket;
 
@@ -24,12 +31,27 @@ export class ClientRegistry implements IClientRegistry {
     });
   }
 
+  getClientVisualizer(idUser: string): VisualizerClient | undefined {
+    return this.visualizerClients.get(idUser);
+  }
+
   getClient(idStream: string): IWebSocket | undefined {
     for (const client of this.visualizerClients) {
       if (client[1].stream === idStream) {
         return client[1].socket;
       }
     }
+  }
+
+  async verifyPasswordOfUserWithStream(
+    passwordOfUser: string,
+    idStream: string
+  ): Promise<boolean> {
+    const stream = this.streamsClients.get(idStream);
+    if (stream) {
+      return await this.passHash.compare(passwordOfUser, stream.password);
+    }
+    return false;
   }
 
   unregisterClient(id: string): void {
@@ -41,9 +63,14 @@ export class ClientRegistry implements IClientRegistry {
     }
   }
 
-  registerCaptureClient(socket: IWebSocket, id: string): void {
-    this.streamsClients.set(id, socket);
-    console.log("[ClientRegistry] Cliente de captura registrado.");
+  registerCaptureClient(
+    socket: IWebSocket,
+    id: string,
+    password: string
+  ): void {
+    // estou passando a senha no parametro e desejo salvar junto no this.streamsClients
+    this.streamsClients.set(id, { socket, password }); // quero passar a senha junto...
+    console.log("[ClientRegistry] Cliente de captura registrado com a senha.");
 
     socket.on("close", () => {
       this.unregisterCaptureClient(id);
@@ -51,7 +78,8 @@ export class ClientRegistry implements IClientRegistry {
   }
 
   getCaptureClient(id: string): IWebSocket | undefined {
-    return this.streamsClients.get(id);
+    const stream = this.streamsClients.get(id);
+    return stream?.socket;
   }
 
   unregisterCaptureClient(id: string): void {
