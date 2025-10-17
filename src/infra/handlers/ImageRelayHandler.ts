@@ -84,6 +84,8 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
     }
 
     try {
+      console.log(parsedMessage);
+
       const clientVisualizer = this.clientRegistry.getClientVisualizer(
         parsedMessage.id
       );
