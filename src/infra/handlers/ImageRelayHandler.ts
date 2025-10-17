@@ -87,7 +87,7 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
       console.log(parsedMessage);
 
       const clientVisualizer = this.clientRegistry.getClientVisualizer(
-        parsedMessage.id
+        parsedMessage.idUser
       );
 
       let result: boolean = false;
