@@ -1,127 +1,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+   
   <head>
+       
     <meta charset="UTF-8" />
+       
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       
     <title>Meus Streams - Live Stream</title>
-    <!-- Inclui o CSS do Bootstrap para estilização -->
+           
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Inclui o Font Awesome para ícones -->
+           
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <!-- Inclui a fonte Poppins do Google Fonts para tipografia consistente -->
+           
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Inclui o Animate.css para animações de entrada -->
+           
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-    <!-- Link para o arquivo de estilo customizado (se houver, para manter consistência) -->
+           
     <link rel="stylesheet" href="css/style.css" />
+     
   </head>
+   
   <body>
-    <!-- Barra de Navegação (Navbar) - Replicada para manter o estilo -->
+           
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+           
       <div class="container">
+               
         <a class="navbar-brand fw-bold" href="/">
-          <i class="fas fa-rocket me-2"></i>Plataforma
+                    <i class="fas fa-rocket me-2"></i>Plataforma        
         </a>
+               
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
         >
-          <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>        
         </button>
+               
         <div class="collapse navbar-collapse" id="navbarNav">
+                   
           <ul class="navbar-nav ms-auto"></ul>
+                 
         </div>
+             
       </div>
+         
     </nav>
 
-    <!-- Conteúdo Principal da Página de Streams -->
+           
     <main class="container my-5">
+           
       <div class="row">
+               
         <div class="col-12 text-center animate__animated animate__fadeIn">
+                   
           <h1 class="display-4 text-primary mb-4">Meus Streams</h1>
+                   
           <p class="lead text-muted">
-            Aqui você encontra todos os seus streams disponíveis.
+                        Gerencie e delete seus streams. **Lembre-se: Deletar é
+            irreversível!**          
           </p>
+                 
         </div>
+             
       </div>
 
+           
       <div class="row mt-4" id="streams-container">
-        <!-- Streams serão carregados dinamicamente aqui -->
+                       
         <div class="col-12 text-center" id="loading-message">
+                   
           <p class="text-muted">Carregando streams...</p>
+                 
         </div>
+               
         <div class="col-12 text-center d-none" id="no-streams-message">
-          <p class="text-muted">Nenhum stream encontrado.</p>
+                   
+          <p class="text-muted">Nenhum stream encontrado. Crie um novo!</p>
+                 
         </div>
+               
         <div class="col-12 text-center d-none" id="error-message">
+                   
           <p class="text-danger">
-            Ocorreu um erro ao carregar os streams. Por favor, tente novamente
-            mais tarde.
+                        Ocorreu um erro ao carregar os streams. Por favor, tente
+            novamente             mais tarde.          
           </p>
+                 
         </div>
+             
       </div>
+         
     </main>
 
-    <!-- Rodapé (Footer) - Replicado para manter o estilo -->
+           
     <footer class="bg-primary text-white py-4">
+           
       <div class="container text-center">
+               
         <p class="mb-0">
-          © 2025 Valdir de Souza. Todos os direitos reservados.
+                    © 2025 Valdir de Souza. Todos os direitos reservados.      
+           
         </p>
+             
       </div>
+         
     </footer>
 
-    <!-- Scripts do Bootstrap e outros JS -->
+           
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Link para o arquivo de script customizado (se houver) -->
+           
     <script src="js/script.js"></script>
+       
     <script>
       // Função para manipular os botões de login/registro/perfil na navegação
       const buttonsLoginRegister = (logged) => {
-        const navBar = document.querySelector(".navbar-nav");
-        // Remove os itens dinâmicos existentes para evitar duplicação
+        const navBar = document.querySelector(".navbar-nav"); // Remove os itens dinâmicos existentes para evitar duplicação
         const dynamicItems = navBar.querySelectorAll(".nav-item.dynamic-auth");
         dynamicItems.forEach((item) => item.remove());
 
         const SignIn = `<li class="nav-item dynamic-auth">
-            <a class="nav-link" href="login.html"
-            ><i class="fas fa-sign-in-alt me-1"></i> Login</a
-            >
-            </li>`;
+            <a class="nav-link" href="login.html"
+            ><i class="fas fa-sign-in-alt me-1"></i> Login</a
+            >
+            </li>`;
 
         const SignUp = `<li class="nav-item dynamic-auth">
-            <a class="nav-link" href="register.html"
-            ><i class="fas fa-user-plus me-1"></i> Cadastro</a
-            >
-            </li>`;
+            <a class="nav-link" href="register.html"
+            ><i class="fas fa-user-plus me-1"></i> Cadastro</a
+            >
+            </li>`;
 
         const loginOn = `<li class="nav-item dynamic-auth">
-              <a class="nav-link" href="myProfile.html"
-              ><i class="fas fa-user me-1"></i> Meu Perfil</a
-              >
-              </li>`;
+              <a class="nav-link" href="myProfile.html"
+              ><i class="fas fa-user me-1"></i> Meu Perfil</a
+              >
+              </li>`; // Verifica a página atual para ativar o link correto na navegação
 
-        // Verifica a página atual para ativar o link correto na navegação
         const isMyProfilePage =
           window.location.pathname.includes("myProfile.html");
         const isMyStreamsPage =
-          window.location.pathname.includes("myStreams.html");
+          window.location.pathname.includes("myStreams.html"); // Garante que "Meu Perfil" ou "Meus Streams" estejam ativos se na página correspondente
 
-        // Garante que "Meu Perfil" ou "Meus Streams" estejam ativos se na página correspondente
         navBar.querySelectorAll(".nav-item a").forEach((link) => {
           link.classList.remove("active");
           link.removeAttribute("aria-current");
@@ -142,9 +177,8 @@
           if (isMyProfilePage) {
             profileLink.classList.add("active");
             profileLink.setAttribute("aria-current", "page");
-          }
+          } // Se logado, adiciona "Meus Streams" se ainda não estiver na nav
 
-          // Se logado, adiciona "Meus Streams" se ainda não estiver na nav
           let streamsLink = navBar.querySelector(
             '.nav-item a[href="myStreams.html"]'
           );
@@ -173,119 +207,191 @@
         }
       };
 
-      document.addEventListener("DOMContentLoaded", async () => {
-        let logged = false; // Assume não logado por padrão
+      // --- FUNÇÃO PARA DELETAR STREAM ---
+      async function deleteStream(streamId, streamName) {
+        // Confirmação de segurança
+        if (
+          !confirm(
+            `Tem certeza que deseja DELETAR o stream "${streamName}" (ID: ${streamId})? Esta ação é irreversível!`
+          )
+        ) {
+          return;
+        }
 
-        // Elementos para exibir mensagens de status
+        try {
+          // Desativa o botão temporariamente para evitar cliques múltiplos
+          const btn = document.querySelector(
+            `button[data-stream-id="${streamId}"]`
+          );
+          if (btn) {
+            btn.disabled = true;
+            btn.innerHTML =
+              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deletando...';
+          }
+
+          const response = await fetch(`/deleteStream/${streamId}`, {
+            method: "DELETE",
+            // O browser inclui os cookies automaticamente
+          });
+
+          if (
+            response.ok ||
+            response.status === 200 ||
+            response.status === 204
+          ) {
+            alert(`Stream "${streamName}" deletado com sucesso!`);
+
+            // Remove o card da tela
+            const card = btn.closest(".col-md-6.col-lg-4");
+            if (card) {
+              card.classList.add("animate__animated", "animate__fadeOutUp");
+              card.addEventListener("animationend", () => card.remove());
+            }
+
+            // Verifica se restam streams
+            if (
+              document.getElementById("streams-container").children.length <= 1
+            ) {
+              document
+                .getElementById("no-streams-message")
+                .classList.remove("d-none");
+            }
+          } else if (response.status === 401 || response.status === 403) {
+            alert(
+              "Ação não autorizada. Sua sessão pode ter expirado ou você não tem permissão para deletar este stream."
+            );
+            window.location.reload(); // Recarrega para forçar a re-autenticação/redirecionamento
+          } else {
+            // Outros erros
+            alert(
+              `Erro ao deletar stream. Status: ${response.status}. Por favor, tente novamente.`
+            );
+            console.error(
+              "Erro ao deletar stream:",
+              response.status,
+              await response.text()
+            );
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = '<i class="fas fa-trash-alt me-2"></i>Deletar';
+            }
+          }
+        } catch (error) {
+          alert("Falha na conexão de rede ao tentar deletar o stream.");
+          console.error("Erro de rede/fetch ao deletar:", error);
+          const btn = document.querySelector(
+            `button[data-stream-id="${streamId}"]`
+          );
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-trash-alt me-2"></i>Deletar';
+          }
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let logged = false; // Assume não logado por padrão // Elementos para exibir mensagens de status
+
         const loadingMessage = document.getElementById("loading-message");
         const noStreamsMessage = document.getElementById("no-streams-message");
         const errorMessage = document.getElementById("error-message");
-        const streamsContainer = document.getElementById("streams-container");
+        const streamsContainer = document.getElementById("streams-container"); // Oculta todas as mensagens de status inicialmente, mostra o "Carregando"
 
-        // Oculta todas as mensagens de status inicialmente
-        loadingMessage.classList.add("d-none");
+        loadingMessage.classList.remove("d-none");
         noStreamsMessage.classList.add("d-none");
         errorMessage.classList.add("d-none");
 
         try {
+          // Lógica de verificação de login (verifyUser / refreshToken)
           console.log(
             "Verificando status de login (usando sistema do usuário)..."
           );
           const verifyResponse = await fetch("/verifyUser");
           try {
-            const verifyResult = await verifyResponse.json(); // Tenta parsear como JSON
+            const verifyResult = await verifyResponse.json();
             logged = verifyResult;
-            console.log("Status de login inicial (JSON):", logged);
           } catch (e) {
             if (e instanceof SyntaxError) {
-              console.warn(
-                "verifyUser retornou resposta não-JSON. Tentando como texto."
-              );
               const verifyText = await verifyResponse.text();
-              logged = verifyText === "true"; // Fallback para texto "true"/"false"
-              console.log("Status de login inicial (Texto):", logged);
+              logged = verifyText === "true";
             } else {
-              throw e; // Lança outros erros de volta
+              throw e;
             }
           }
 
           if (!logged) {
-            console.log("Usuário não logado, tentando refresh do token...");
             const refreshResponse = await fetch("/refreshToken");
             const refreshJson = await refreshResponse.json();
             logged = !(refreshJson.message === "unauthorized");
-            if (logged) {
+            if (!logged) {
               console.log(
-                "Token refrescado com sucesso. Usuário agora logado."
-              );
-            } else {
-              console.log(
-                "Falha ao refrescar token. Usuário permanece não logado."
-              );
-              loadingMessage.classList.add("d-none");
+                "Falha ao refrescar token. Redirecionando para login."
+              ); // Redireciona o usuário para login se não estiver logado
+              window.location.href = "login.html";
               return;
             }
           }
         } catch (error) {
-          console.error(
-            "Erro ao verificar status de login ou refrescar token:",
-            error
-          );
-          logged = false;
-          errorMessage.classList.remove("d-none");
+          console.error("Erro crítico no login/refresh:", error);
           loadingMessage.classList.add("d-none");
+          errorMessage.classList.remove("d-none");
           return;
         }
 
-        buttonsLoginRegister(logged);
+        buttonsLoginRegister(logged); // --- Lógica de CARREGAMENTO e RENDERIZAÇÃO de Streams ---
 
         if (logged) {
-          loadingMessage.classList.remove("d-none");
-          console.log("Usuário está logado. Tentando buscar streams...");
           try {
             const response = await fetch("/getAllStreams");
-            const streams = await response.json();
+            const streams = await response.json(); // Limpa mensagens anteriores
+            streamsContainer.innerHTML = "";
             loadingMessage.classList.add("d-none");
 
-            console.log("Streams recebidos:", streams);
-
             if (streams && Array.isArray(streams) && streams.length > 0) {
-              // Adicionado Array.isArray para robustez
-              console.log(
-                `Encontrados ${streams.length} streams. Renderizando...`
-              );
               streams.forEach((stream, index) => {
-                const streamId = stream.name
-                  ? stream.name.replace(/\s+/g, "")
-                  : "stream-" + index;
+                // Usamos o ID do stream para a rota DELETE.
+                // Assumimos que 'stream.id' é o identificador único para o backend.
+                const streamId = stream.id || `temp-id-${index}`;
+                const streamName = stream.name || "Stream Sem Nome";
 
                 const streamCard = `
-                  <div class="col-md-6 col-lg-4 mb-4 animate__animated animate__fadeInUp">
-                    <div class="card h-100 shadow-sm">
-                      <div class="card-body text-center">
-                        <i class="fas fa-video text-primary mb-3" style="font-size: 2.5rem;"></i>
-                        <h5 class="card-title">${
-                          stream.name || "Stream Sem Nome"
-                        }</h5>
-                        <p class="card-text text-muted">
-                          Descrição breve do stream ou informações adicionais.
-                        </p>
-                        <a href="watchStream?${streamId}" class="btn btn-primary mt-3">
-                          <i class="fas fa-play-circle me-2"></i>Assistir
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                `;
+                  <div class="col-md-6 col-lg-4 mb-4 animate__animated animate__fadeInUp">
+                    <div class="card h-100 shadow-sm">
+                      <div class="card-body text-center d-flex flex-column">
+                        <i class="fas fa-video text-primary mb-3" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title">${streamName}</h5>
+                        <p class="card-text text-muted mb-4">
+                          ID: ${streamId}
+                        </p>
+                        <div class="mt-auto d-grid gap-2">
+                          <a href="watchStream?id=${streamId}" class="btn btn-primary">
+                            <i class="fas fa-play-circle me-2"></i>Assistir
+                          </a>
+                                                        <button type="button" 
+                                    class="btn btn-outline-danger delete-stream-btn" 
+                                    data-stream-id="${streamId}"
+                                    data-stream-name="${streamName}"
+                            >
+                            <i class="fas fa-trash-alt me-2"></i>Deletar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `;
                 streamsContainer.insertAdjacentHTML("beforeend", streamCard);
-                console.log(
-                  `Card para stream '${stream.name || "Sem Nome"}' adicionado.`
-                );
+              });
+
+              // Adiciona o event listener a todos os novos botões de deletar
+              document.querySelectorAll(".delete-stream-btn").forEach((btn) => {
+                btn.addEventListener("click", function () {
+                  const id = this.getAttribute("data-stream-id");
+                  const name = this.getAttribute("data-stream-name");
+                  deleteStream(id, name);
+                });
               });
             } else {
-              console.log(
-                "Nenhum stream encontrado ou array de streams vazio."
-              );
+              // Nenhum stream encontrado
               noStreamsMessage.classList.remove("d-none");
             }
           } catch (error) {
@@ -293,11 +399,9 @@
             loadingMessage.classList.add("d-none");
             errorMessage.classList.remove("d-none");
           }
-        } else {
-          console.log("Usuário não está logado. Streams não serão carregados.");
-          loadingMessage.classList.add("d-none");
         }
       });
     </script>
+     
   </body>
 </html>

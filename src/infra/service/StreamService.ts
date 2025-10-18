@@ -36,6 +36,17 @@ export class StreamService {
       password: await this.passwordHash.hash(streamInput.password.trim()),
     };
 
+    const allStream: StreamOutputDTO[] =
+      await this.getAllStreamsByIdUser.execute(idUser);
+
+    for (const streamOfUser of allStream) {
+      if (streamOfUser.name === stream.name)
+        return {
+          message: "Already exists one Stream with this name",
+          status: false,
+        };
+    }
+
     const streamEntitie: StreamEntities = await this.createStream.execute(
       stream,
       idUser

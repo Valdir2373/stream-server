@@ -98,21 +98,15 @@ export class ImageRelayHandler implements IWebSocketMessageHandler {
         );
       }
 
-      console.log("resultado: " + result);
-      console.log("idClient: " + idClient);
-      console.log("clientVisualizer: " + clientVisualizer);
-
       if (result) {
         console.log("imagem enviada com sucesso");
         return adminSocket.send(parsedMessage.image);
+      } else {
+        adminSocket.send("PASSWORD INCORRET");
+        // this.clientRegistry.unregisterClient(idClient);
+        this.clientRegistry.unregisterCaptureClient(parsedMessage.idUser);
+        return;
       }
-
-      throw new Error("ERRO NA SENHA TALVEZ INCORRETA");
-    } catch (error) {
-      // console.error(
-      //   "[ImageRelayHandler] Erro ao retransmitir imagem para o Client:",
-      //   error
-      // );
-    }
+    } catch (error) {}
   }
 }
