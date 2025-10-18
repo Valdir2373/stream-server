@@ -36,15 +36,23 @@ export class StreamService {
       password: await this.passwordHash.hash(streamInput.password.trim()),
     };
 
-    const allStream: StreamOutputDTO[] =
-      await this.getAllStreamsByIdUser.execute(idUser);
+    try {
+      const allStream: StreamOutputDTO[] =
+        await this.getAllStreamsByIdUser.execute(idUser);
 
-    for (const streamOfUser of allStream) {
-      if (streamOfUser.name === stream.name)
-        return {
-          message: "Already exists one Stream with this name",
-          status: false,
-        };
+      for (const streamOfUser of allStream) {
+        if (streamOfUser.name === stream.name)
+          return {
+            message: "Already exists one Stream with this name",
+            status: false,
+          };
+      }
+    } catch (e: any) {
+      if (e.message === "not stream on this user") {
+        console.log("usuario criou seu primeiro stream");
+      } else {
+        throw e;
+      }
     }
 
     const streamEntitie: StreamEntities = await this.createStream.execute(
