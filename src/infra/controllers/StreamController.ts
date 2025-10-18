@@ -32,6 +32,11 @@ export class StreamController {
         streamInputDto,
         token.id
       );
+
+      if (!compileResult.status) {
+        return res.status(403).json(compileResult);
+      }
+
       console.log(
         "[StreamController]: Resultado da compilação Go:",
         compileResult
@@ -165,7 +170,7 @@ export class StreamController {
     );
     server.registerRouter(
       "delete",
-      "/deleteStream/",
+      "/deleteStream/:idStream",
       this.deleteStreamById.bind(this)
     );
   }

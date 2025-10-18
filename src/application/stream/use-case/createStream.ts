@@ -15,6 +15,7 @@ export class CreateStream {
       idUser,
       this.createID
     );
+
     return await this.streamRepository.save(streamEntities);
   }
 }

@@ -142,22 +142,22 @@
           console.log(logged);
 
           const SignIn = `<li class="nav-item">
-					<a class="nav-link" href="login.html"
-					><i class="fas fa-sign-in-alt me-1"></i> Login</a
-					>
-					</li>`;
+      <a class="nav-link" href="login.html"
+      ><i class="fas fa-sign-in-alt me-1"></i> Login</a
+      >
+      </li>`;
 
           const SignUp = `<li class="nav-item">
-								<a class="nav-link" href="register.html"
-								><i class="fas fa-user-plus me-1"></i> Cadastro</a
-								>
-								</li>`;
+      			<a class="nav-link" href="register.html"
+      			><i class="fas fa-user-plus me-1"></i> Cadastro</a
+      			>
+      			</li>`;
 
           const loginOn = `<li class="nav-item">
-										<a class="nav-link" href="myProfile.html"
-										><i class="fas fa-user me-1"></i> Meu perfil</a
-										>
-										</li>`;
+      					<a class="nav-link" href="myProfile.html"
+      					><i class="fas fa-user me-1"></i> Meu perfil</a
+      					>
+      					</li>`;
           const navBar = document.querySelector(".navbar-nav");
           if (logged) {
             const navItem = document.createElement("li");
@@ -278,10 +278,34 @@
               };base64,${event.data}`;
             } else {
               console.log("Mensagem de texto do servidor:", event.data);
+              const errorMessage = event.data;
               if (
-                event.data === "STREAM_NOT_FOUND" ||
-                event.data === "UNAUTHORIZED"
+                errorMessage === "STREAM_NOT_FOUND" ||
+                errorMessage === "UNAUTHORIZED" ||
+                errorMessage === "PASSWORD_INCORRECT"
               ) {
+                let displayMessage = "";
+
+                switch (errorMessage) {
+                  case "STREAM_NOT_FOUND":
+                    displayMessage = "Stream não encontrado.";
+                    break;
+                  case "UNAUTHORIZED":
+                    displayMessage =
+                      "Acesso negado. Usuário não autenticado ou sem permissão.";
+                    break;
+                  case "PASSWORD_INCORRECT":
+                    displayMessage = "Senha incorreta. Acesso não autorizado.";
+                    break;
+                  default:
+                    displayMessage = `Erro desconhecido: ${errorMessage.replace(
+                      /_/g,
+                      " "
+                    )}`;
+                }
+
+                alert(`Atenção: ${displayMessage}`);
+
                 statusElement.textContent = `Status: ${event.data.replace(
                   /_/g,
                   " "

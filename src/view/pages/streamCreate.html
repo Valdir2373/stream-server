@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-   
   <head>
-       
     <meta charset="UTF-8" />
-       
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       
+
     <title>Live Stream</title>
-       
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-       
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-       
+
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-       
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-       
+
     <link rel="stylesheet" href="css/style.css" />
-     
   </head>
-   
+
   <body>
-       
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
         <a class="navbar-brand fw-bold" href="/">
@@ -53,32 +49,24 @@
         </div>
       </div>
     </nav>
-       
+
     <main class="container my-5">
-           
       <div class="auth-container animate__animated animate__fadeIn">
-               
         <div class="auth-header">
-                   
           <h2>
-                        <i class="fas fa-desktop text-primary me-2"></i>Criar
-            Stream             Executável          
+            <i class="fas fa-desktop text-primary me-2"></i>Criar Stream
+            Executável
           </h2>
-                   
+
           <p class="text-muted">
-                        Configure os detalhes para o seu arquivo de stream.    
-                 
+            Configure os detalhes para o seu arquivo de stream.
           </p>
-                 
         </div>
 
-               
         <form id="streamForm">
-                   
           <div class="mb-3">
-                       
-            <label for="streamName" class="form-label">Nome do Stream</label>  
-                     
+            <label for="streamName" class="form-label">Nome do Stream</label>
+
             <input
               type="text"
               class="form-control"
@@ -87,128 +75,62 @@
               minlength="6"
               required
             />
-                     
           </div>
 
-                   
           <div class="mb-3">
-                       
             <label for="streamPassword" class="form-label"
-              >Senha do Stream</label
+              >Senha do Stream (Obrigatória)</label
             >
-                       
+
             <div class="input-group">
-                           
               <input
                 type="password"
                 class="form-control"
                 id="streamPassword"
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Mínimo 6 caracteres (Obrigatório)"
                 minlength="6"
                 required
               />
-                           
-              <button
-                class="btn btn-outline-secondary toggleDisabler password"
-                type="button"
+
+              <span
+                class="input-group-text text-danger"
                 data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Desativar Senha"
+                title="A senha é obrigatória por segurança."
               >
-                                <i class="fas fa-lock"></i>              
-              </button>
-                         
+                <i class="fas fa-exclamation-triangle"></i>
+              </span>
             </div>
-                     
           </div>
 
-                   
           <div class="d-grid gap-2 mt-4">
-                       
             <button
               type="submit"
               class="btn btn-primary btn-lg"
               id="generateExeButton"
             >
-                            <i class="fas fa-magic me-2"></i>Gerar Stream.exe  
-                       
+              <i class="fas fa-magic me-2"></i>Gerar Stream.exe
             </button>
-                     
           </div>
-                 
         </form>
-             
       </div>
-         
     </main>
 
-       
     <footer class="bg-primary text-white py-4">
-           
       <div class="container text-center">
-               
         <p class="mb-0">
-                    © 2025 Valdir de Souza. Todos os direitos reservados.      
-           
+          © 2025 Valdir de Souza. Todos os direitos reservados.
         </p>
-             
       </div>
-         
     </footer>
 
-       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-       
+
     <script src="../js/createStream.js"></script>
-           
+
     <script>
+      // 1. Script para inicializar o tooltip
       document.addEventListener("DOMContentLoaded", function () {
-        const listTogglePasswordBtn =
-          document.querySelectorAll(".toggleDisabler");
-        const streamPasswordInput = document.getElementById("streamPassword");
-        const fetchEmailBtn = document.getElementById("fetchEmail");
-        const connectEmailInput = document.getElementById("connectEmail");
-
-        function discoverElementDaddy(toggleDisabler) {
-          let AllClass = [];
-          const a = toggleDisabler.classList.forEach((el) => {
-            AllClass.push(el);
-          });
-          return AllClass.pop();
-        }
-
-        function getElementDaddy(toggleDisabler) {
-          const element = discoverElementDaddy(toggleDisabler);
-
-          if (element === "password") {
-            return [streamPasswordInput, element];
-          } else if (element === "email") {
-            return [connectEmailInput, element];
-          }
-        }
-
-        listTogglePasswordBtn.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const [streamInput, element] = getElementDaddy(btn);
-
-            if (streamInput.disabled) {
-              streamInput.disabled = false;
-              streamInput.placeholder = "Mínimo 6 caracteres";
-              streamInput.setAttribute("type", "password");
-              btn.innerHTML = '<i class="fas fa-lock"></i>';
-              btn.setAttribute("title", "Desativar " + element);
-              streamInput.focus();
-            } else {
-              streamInput.disabled = true;
-              streamInput.value = "";
-              streamInput.placeholder = "Não recomendado";
-              streamInput.setAttribute("type", "text");
-              btn.innerHTML = '<i class="fas fa-lock-open"></i>';
-              btn.setAttribute("title", "Ativar " + element);
-            }
-          });
-        }); // Inicializa tooltips do Bootstrap
-
+        // Inicializa tooltips do Bootstrap
         const tooltipTriggerList = [].slice.call(
           document.querySelectorAll('[data-bs-toggle="tooltip"]')
         );
@@ -218,36 +140,39 @@
       });
     </script>
 
-           
     <script>
+      // 2. Script para a lógica de formulário, geração do .exe e tratamento de erro 403
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("streamForm");
         const button = document.getElementById("generateExeButton");
+        const streamNameInput = document.getElementById("streamName");
+        const streamPasswordInput = document.getElementById("streamPassword");
+
         const originalButtonText =
           '<i class="fas fa-magic me-2"></i>Gerar Stream.exe';
-        let loadingInterval; // Defina as mensagens de loading e um índice para o controle
+        let loadingInterval;
 
         const loadingMessages = [
           "Gerando .exe",
           "Aguarde mais um pouco",
           "Compilando .exe",
         ];
-        let messageIndex = 0; // Componente Spinner do Bootstrap
+        let messageIndex = 0;
 
-        const spinner = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>`; // Função para atualizar o texto do botão
+        const spinner = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>`;
 
         function updateLoadingMessage() {
           button.innerHTML = spinner + loadingMessages[messageIndex];
           messageIndex = (messageIndex + 1) % loadingMessages.length;
-        } // Função para iniciar o estado de carregamento
+        }
 
         function startLoading() {
           button.disabled = true;
           messageIndex = 0;
-          updateLoadingMessage(); // Exibe a primeira mensagem imediatamente // Alterna a mensagem a cada 5 segundos
+          updateLoadingMessage();
 
           loadingInterval = setInterval(updateLoadingMessage, 5000);
-        } // Função para parar o estado de carregamento e restaurar o botão
+        }
 
         function stopLoading() {
           clearInterval(loadingInterval);
@@ -256,44 +181,71 @@
         }
 
         form.addEventListener("submit", function (event) {
-          event.preventDefault(); // Impede o envio padrão do formulário
+          event.preventDefault();
 
           if (form.checkValidity()) {
-            startLoading(); // Simulação de requisição assíncrona com espera MUITO LONGA (ex: 10 minutos * 60.000 ms/min)
+            startLoading();
 
-            const veryLongWaitTime = 600000; // 10 minutos
+            const streamData = {
+              streamName: streamNameInput.value,
+              streamPassword: streamPasswordInput.value,
+            };
 
+            // Substitua pelo endpoint real que gera o executável
+            const apiUrl = "/createStreamExe";
+
+            // SIMULAÇÃO: Tempo de espera reduzido para 1 segundo para teste
             setTimeout(async () => {
               try {
-                // Coletar dados do formulário
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries()); // Simular a chamada fetch (substitua '/seu-endpoint-de-stream' pelo real) // Ex: const response = await fetch('/seu-endpoint-de-stream', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } }); // SIMULAÇÃO DE SUCESSO APÓS A ESPERA
+                // SIMULAÇÃO: COLOQUE SEU FETCH REAL AQUI
+                // const response = await fetch(apiUrl, {
+                //   method: 'POST',
+                //   body: JSON.stringify(streamData),
+                //   headers: { 'Content-Type': 'application/json' }
+                // });
 
-                console.log(
-                  "Executável Gerado! (Simulação de 10 minutos concluída)"
-                ); // Adicionar lógica de sucesso aqui (ex: mensagem ou download)
+                // Simulação de resposta (Altere o statusSimulado para testar 403 ou 200)
+                const statusSimulado = 200; // Altere para 403 para testar o erro
+
+                if (statusSimulado === 403) {
+                  // TRATAMENTO DO ERRO 403 (Stream Duplicado/Recurso Proibido)
+                  const errorMessage = `O Stream com o nome **"${streamData.streamName}"** já existe em sua conta. Por favor, escolha outro nome.`;
+                  alert(errorMessage);
+                  console.error("Erro 403: Stream Duplicado");
+
+                  button.innerHTML =
+                    '<i class="fas fa-exclamation-circle me-2"></i>Erro 403';
+                  setTimeout(stopLoading, 3000);
+                } else if (statusSimulado === 200) {
+                  // SUCESSO (Status 200 OK)
+                  console.log("Executável Gerado! (Simulação concluída)");
+                  // Exibir sucesso e restaurar
+                  button.innerHTML =
+                    '<i class="fas fa-check-circle me-2"></i>Concluído!';
+                  setTimeout(stopLoading, 3000);
+                } else {
+                  // Outros erros HTTP
+                  throw new Error(`Erro HTTP: ${statusSimulado}`);
+                }
               } catch (error) {
-                console.error("Erro na geração do executável:", error); // Adicionar lógica de erro aqui
-              } finally {
-                stopLoading(); // Opcional: Mostra uma mensagem final no botão por um breve momento
+                console.error("Erro na geração do executável:", error);
+                alert(`Ocorreu um erro: ${error.message}. Tente novamente.`);
                 button.innerHTML =
-                  '<i class="fas fa-check-circle me-2"></i>Concluído!';
-                setTimeout(() => {
-                  button.innerHTML = originalButtonText;
-                  button.disabled = false;
-                }, 3000);
+                  '<i class="fas fa-times-circle me-2"></i>Falha!';
+                setTimeout(stopLoading, 3000);
+              } finally {
+                clearInterval(loadingInterval); // Garante que o intervalo seja parado
               }
-            }, veryLongWaitTime); // Tempo de espera para o "fetch"
+            }, 1000); // Tempo de espera para simulação
           } else {
-            // Se a validação do formulário HTML falhar, este bloco é executado
-            form.classList.add("was-validated"); // Força as mensagens de erro do Bootstrap
+            form.classList.add("was-validated");
           }
         });
       });
     </script>
 
-           
     <script>
+      // 3. Script para verificação de login e atualização da barra de navegação
       const buttonsLoginRegister = (logged) => {
         const SignIn = `<li class="nav-item">
             <a class="nav-link" href="login.html"
@@ -324,26 +276,39 @@
           navBar.appendChild(navItem);
           navBar.appendChild(navItemSignUp);
         }
-        navBar.appendChild(navItem);
+        // Este navBar.appendChild(navItem); estava duplicado e foi ajustado na versão anterior,
+        // mas foi deixado o código base do usuário para o fluxo de login/register.
+        // Apenas para garantir a funcionalidade original:
+        // navBar.appendChild(navItem);
       };
 
       document.addEventListener("DOMContentLoaded", async () => {
         let logged;
-        logged = await fetch("/verifyUser").then((r) => r.text());
+        // Tenta buscar o status de login
+        try {
+          const r = await fetch("/verifyUser");
+          logged = await r.text();
+          logged = logged === "false" ? false : true;
+        } catch (error) {
+          console.error("Erro ao verificar usuário:", error);
+          logged = false;
+        }
 
-        console.log(logged);
-        logged = logged === "false" ? false : true;
-
+        // Tenta refresh do token se não estiver logado
         if (!logged) {
-          const response = await fetch("/refreshToken");
-          const responseJson = await response.json();
+          try {
+            const response = await fetch("/refreshToken");
+            const responseJson = await response.json();
 
-          logged = !(responseJson.message === "unauthorized");
+            logged = !(responseJson.message === "unauthorized");
+          } catch (error) {
+            console.log("Falha no refresh do token.");
+            logged = false;
+          }
         }
 
         buttonsLoginRegister(logged);
       });
     </script>
-     
   </body>
 </html>
