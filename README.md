@@ -52,7 +52,7 @@ A compilação do cliente Go é feita **no próprio servidor** (use case `Compil
 ## Stack tecnológica
 
 - **Runtime:** Node.js 18+
-- **Linguagem:** TypeScript
+- **Linguagem:** TypeScript, Go
 - **Build:** Babel (ESM, TypeScript)
 - **HTTP:** Express 5
 - **WebSocket:** `ws`
